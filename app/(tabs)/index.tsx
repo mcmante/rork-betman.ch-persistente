@@ -17,9 +17,6 @@ export default function MatchesScreen() {
   const isAdmin = user?.role === 'ADMIN';
   const isConfig = user?.role === 'CONFIG';
 
-  if (isConfig) {
-    return <Redirect href="/dbconfig" />;
-  }
   const [showTournamentPicker, setShowTournamentPicker] = useState(false);
   const [showBonusModal, setShowBonusModal] = useState(false);
   const [selectedMatchId, setSelectedMatchId] = useState<string | null>(null);
@@ -117,6 +114,10 @@ export default function MatchesScreen() {
   }, [matchesQuery.data]);
 
   const inventory = inventoryQuery.data || [];
+
+  if (isConfig) {
+    return <Redirect href="/dbconfig" />;
+  }
 
   const getBonusQuantity = (type: BonusType) => {
     return inventory.find(i => i.bonusType === type)?.quantity || 0;
